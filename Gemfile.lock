@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    fuelsdk (0.1.9.RP)
+    fuelsdk (0.1.11.RP)
       activesupport (>= 3.2.8)
-      json (~> 1.7.0)
+      json (~> 1.7)
       jwt (~> 0.1.6)
       savon
 
@@ -60,7 +60,9 @@ GEM
     httpi (2.4.0)
       rack
     i18n (0.7.0)
-    json (1.7.7)
+    its (0.2.0)
+      rspec-core
+    json (1.8.2)
     jwt (0.1.13)
       multi_json (>= 1.5)
     listen (2.10.0)
@@ -157,6 +159,7 @@ DEPENDENCIES
   fuelsdk!
   guard
   guard-rspec
+  its
   pry
   rake
   rspec
