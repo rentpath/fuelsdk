@@ -215,10 +215,7 @@ module FuelSDK
 
       private
         def add_customer_key data
-          data.each do |d|
-            next if d.include? 'CustomerKey'
-            d['CustomerKey'] = customer_key
-          end
+          data['CustomerKey'] ||= customer_key
         end
 
         def retrieve_required
@@ -325,7 +322,7 @@ module FuelSDK
     end
 
     def get
-        super id
+      super id
     end
 
     class << self
@@ -384,26 +381,25 @@ module FuelSDK
   end
 
   class Patch < Objects::Base
-      include Objects::Soap::CUD
-      attr_accessor :id
+    include Objects::Soap::CUD
+    attr_accessor :id
 
-      def initialize client, id, properties
-        self.properties = properties
-        self.client = client
-        self.id = id
-      end
+    def initialize client, id, properties
+      self.properties = properties
+      self.client = client
+      self.id = id
+    end
 
-      def patch
-        super
-      end
+    def patch
+      super
+    end
 
-      class << self
-        def new client, id, properties=nil
-          o = self.allocate
-          o.send :initialize, client, id, properties
-          return o.patch
-        end
+    class << self
+      def new client, id, properties=nil
+        o = self.allocate
+        o.send :initialize, client, id, properties
+        return o.patch
       end
+    end
   end
-
 end

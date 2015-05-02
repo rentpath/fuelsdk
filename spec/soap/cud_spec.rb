@@ -66,7 +66,8 @@ describe FuelSDK::Soap do
 
       expect(client.normalize_properties_for_cud(
         'Subscriber',
-        [{'Email' => 'dev@exacttarget.com', 'FirstName' => 'Devy'}]
+        [{'Email' => 'dev@exacttarget.com', 'FirstName' => 'Devy'}],
+        :create
       )).to eq(
           [{
             'Email' => 'dev@exacttarget.com',
@@ -82,7 +83,8 @@ describe FuelSDK::Soap do
 
       expect(client.normalize_properties_for_cud(
         'Subscriber',
-        {'Email' => 'dev@exacttarget.com', 'FirstName' => 'Devy'}
+        {'Email' => 'dev@exacttarget.com', 'FirstName' => 'Devy'},
+        :create
       )).to eq(
           [{
             'Email' => 'dev@exacttarget.com',

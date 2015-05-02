@@ -21,9 +21,12 @@ GEM
       gyoku (>= 0.4.0)
       nokogiri
     builder (3.2.2)
+    byebug (4.0.5)
+      columnize (= 0.9.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     coderay (1.1.0)
+    columnize (0.9.0)
     coveralls (0.8.0)
       multi_json (~> 1.10)
       rest-client (>= 1.6.8, < 2)
@@ -89,6 +92,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.1.0)
+      byebug (~> 4.0)
+      pry (~> 0.10)
     rack (1.6.0)
     rake (10.4.2)
     rb-fsevent (0.9.4)
@@ -161,6 +167,7 @@ DEPENDENCIES
   guard-rspec
   its
   pry
+  pry-byebug
   rake
   rspec
   webmock

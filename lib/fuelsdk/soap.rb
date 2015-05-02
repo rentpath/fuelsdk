@@ -337,7 +337,7 @@ module FuelSDK
       }
     end
 
-    def format_dataextension_cud_properties properties
+    def format_dataextension_cud_properties properties, action
       Array.wrap(properties).each do |p|
         formated_attrs = []
         p.each do |k, v|
@@ -348,8 +348,13 @@ module FuelSDK
           end
         end
         unless formated_attrs.blank?
-          p['Properties'] ||= {}
-          (p['Properties']['Property'] ||= []).concat formated_attrs
+          if action == :delete
+            p['Keys'] ||= {}
+            (p['Keys']['Key'] ||= []).concat formated_attrs
+          else
+            p['Properties'] ||= {}
+            (p['Properties']['Property'] ||= []).concat formated_attrs
+          end
         end
       end
     end
@@ -373,12 +378,12 @@ module FuelSDK
       end
     end
 
-    def normalize_properties_for_cud object_type, properties
+    def normalize_properties_for_cud object_type, properties, action
       properties = Array.wrap(properties)
       raise 'Object properties must be a Hash' unless properties.first.kind_of? Hash
 
       if is_a_dataextension? object_type
-        format_dataextension_cud_properties properties
+        format_dataextension_cud_properties properties, action
       else
         format_object_cud_properties object_type, properties
       end
@@ -388,7 +393,7 @@ module FuelSDK
     private
 
       def soap_cud action, object_type, properties
-        properties = normalize_properties_for_cud object_type, properties
+        properties = normalize_properties_for_cud object_type, properties, action
         message = create_objects_message object_type, properties
         soap_request action, message
       end
