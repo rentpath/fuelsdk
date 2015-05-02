@@ -412,14 +412,13 @@ describe FuelSDK::DataExtension::Row do
     }
 
     it 'raises an error when missing both name and customer key' do
-      subject.properties = [{'Name' => 'Some DE'}, {'Name' => 'Some DE'}]
+      subject.properties = {'Name' => 'Some DE'}
       expect{subject.post}.to raise_error('Unable to process DataExtension::Row ' \
         'request due to missing CustomerKey and Name')
     end
 
     it 'uses explicitly defined properties' do
-      subject.properties = [{'CustomerKey' => 'Subscribers',
-        'Properties' => {'Property' => [{'Name' => 'Name', 'Value' => 'Justin'}]}}]
+      subject.properties = {'Name' => 'Name', 'Value' => 'Justin'}
       expect(subject.post).to eq([
         'DataExtensionObject', [{
           'CustomerKey' => 'Subscribers',
@@ -429,8 +428,7 @@ describe FuelSDK::DataExtension::Row do
 
     it 'inserts customer key into properties when set using accessor' do
       subject.customer_key = 'Subscribers'
-      subject.properties = [{'Properties' => {
-        'Property' => [{'Name' => 'Name', 'Value' => 'Justin'}]}}]
+      subject.properties = {'Name' => 'Name', 'Value' => 'Justin'}
       expect(subject.post).to eq([
         'DataExtensionObject', [{
           'CustomerKey' => 'Subscribers',
@@ -446,8 +444,7 @@ describe FuelSDK::DataExtension::Row do
       rsp.stub(:success?).and_return true
 
       subject.stub_chain(:client, :soap_get).and_return(rsp)
-      subject.properties = [{'Properties' => {
-        'Property' => [{'Name' => 'Name', 'Value' => 'Justin'}]}}]
+      subject.properties = {'Name' => 'Name', 'Value' => 'Justin'}
 
       expect(subject.post).to eq([
         'DataExtensionObject', [{
@@ -458,7 +455,7 @@ describe FuelSDK::DataExtension::Row do
 
     it 'correctly formats array property' do
       subject.customer_key = 'Subscribers'
-      subject.properties = [{'Name' => 'Justin'}]
+      subject.properties = {'Name' => 'Justin'}
 
       expect(subject.post).to eq(
         ["DataExtensionObject", [{"Name"=>"Justin", "CustomerKey"=>"Subscribers"}]]
